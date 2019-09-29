@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using TransitVancouver.Services.ApiClients;
 using TransitVancouver.Services.Interfaces;
+using TransitVancouver.Services.Mappers;
 using TransitVancouver.Services.Providers;
 
 namespace TransitVancouver.Api
@@ -35,8 +36,10 @@ namespace TransitVancouver.Api
             services.AddSingleton<ITranslinkApiClient, TranslinkApiClient>(service => {
                 return new TranslinkApiClient(translinkBaseApiAddress, translinkApiKey);
             });
+            services.AddTransient<IFeedEntityToDomainObjectMapper, FeedEntityToDomainObjectMapper>();
             services.AddTransient<IScheduleProvider, ScheduleProvider>();
-            services.AddTransient<IServiceAlertsProvider, ServiceAlertsProvider>();  
+            services.AddTransient<IVehiclePositionProvider, VehiclePositionProvider>();
+            services.AddTransient<IServiceAlertsProvider, ServiceAlertsProvider>();
             services.AddMvcCore().AddJsonFormatters(); 
         }
 
